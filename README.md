@@ -1,2 +1,3 @@
-# child-browser
-An internet browser for a child with restriction of sites she can visit
+# Child browser
+
+An internet browser for a child with restriction of sites she can visit.
