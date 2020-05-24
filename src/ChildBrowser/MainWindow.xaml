@@ -13,6 +13,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBox x:Name="address" Grid.Row="0" KeyUp="OnAddressKeyUp" />
-        <wv:WebView x:Name="browser" Grid.Row="1" />
+        <wv:WebView x:Name="browser" Grid.Row="1" 
+                    NavigationStarting="OnNavigationStarting"
+                    NavigationCompleted="OnNavigationCompleted">
+        </wv:WebView>
     </Grid>
 </Window>

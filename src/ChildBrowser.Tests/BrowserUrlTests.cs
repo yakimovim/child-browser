@@ -13,7 +13,9 @@ namespace ChildBrowser.Tests
                 "http://google.com",
                 "youtube.com",
                 "https://www.example.com",
-                "contoso.org/contacts"
+                "contoso.org/contacts",
+                "wiki.com?a=1&b=2",
+                "abc.ru#data"
             });
         }
 
@@ -31,8 +33,13 @@ namespace ChildBrowser.Tests
         /* Path segments */
         [InlineData("http://google.com/some", "http://google.com/some")] // additional path segments are allowed
         [InlineData("contoso.org/contacts/about", "https://contoso.org/contacts/about")] // additional path segments are allowed
-        [InlineData("contoso.org/about", null)] // it is not allow to start with different segments
-
+        [InlineData("contoso.org/about", null)] // it is not allowed to start with different segments
+        /* Query */
+        [InlineData("wiki.com", "https://wiki.com")] // query in allowed addresses is ignored
+        [InlineData("wiki.com?c=4", "https://wiki.com?c=4")] // query in allowed addresses is ignored
+        /* Hash */
+        [InlineData("abc.ru", "https://abc.ru")] // hash in allowed addresses is ignored
+        [InlineData("abc.ru/1/2?f=3#ddd", "https://abc.ru/1/2?f=3#ddd")] // hash in allowed addresses is ignored
         public void Test_GetUri(string input, string output)
         {
             var result = _sut.GetUri(input);
