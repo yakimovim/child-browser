@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,13 +12,11 @@ namespace ChildBrowser
     {
         private readonly BrowserUrl _browserUrl;
 
-        public MainWindow()
+        public MainWindow(BrowserUrl browserUrl)
         {
+            _browserUrl = browserUrl ?? throw new ArgumentNullException(nameof(browserUrl));
+
             InitializeComponent();
-
-            var allowedHosts = File.ReadAllLines("AllowedHosts.txt");
-
-            _browserUrl = new BrowserUrl(allowedHosts);
 
             DataContext = new MainWindowViewModel(browser);
         }
@@ -56,6 +55,8 @@ namespace ChildBrowser
                 e.Cancel = true;
                 status.Text = $"Address '{address}' is not allowed";
             }
+
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private void OnNavigationCompleted(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationCompletedEventArgs e)
@@ -69,6 +70,8 @@ namespace ChildBrowser
             {
                 status.Text = "Page is failed to load";
             }
+
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }

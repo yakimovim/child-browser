@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 
 namespace ChildBrowser
@@ -13,5 +8,17 @@ namespace ChildBrowser
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var allowedHosts = File.ReadAllLines("AllowedHosts.txt");
+
+            var browserUrl = new BrowserUrl(allowedHosts);
+
+            MainWindow = new MainWindow(browserUrl);
+
+            MainWindow.Show();
+        }
     }
 }

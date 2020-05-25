@@ -1,14 +1,9 @@
 ﻿using Microsoft.Toolkit.Win32.UI.Controls;
-using Microsoft.Toolkit.Wpf.UI.Controls;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 using System.Windows.Input;
 
 namespace ChildBrowser
 {
-    class MainWindowViewModel : INotifyPropertyChanged
+    class MainWindowViewModel
     {
         private readonly IWebView _browser;
 
@@ -30,8 +25,6 @@ namespace ChildBrowser
                 (arg) => _browser.Refresh()
             );
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand BackCommand { get; }
 
