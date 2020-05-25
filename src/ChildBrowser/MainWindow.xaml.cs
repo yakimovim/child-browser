@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ChildBrowser
 {
@@ -26,9 +15,11 @@ namespace ChildBrowser
         {
             InitializeComponent();
 
-            _browserUrl = new BrowserUrl(new[] {
-                "https://ru.wikipedia.org"
-            });
+            var allowedHosts = File.ReadAllLines("AllowedHosts.txt");
+
+            _browserUrl = new BrowserUrl(allowedHosts);
+
+            DataContext = new MainWindowViewModel(browser);
         }
 
         private void OnAddressKeyUp(object sender, KeyEventArgs e)
@@ -43,7 +34,7 @@ namespace ChildBrowser
                 }
                 else
                 {
-                    MessageBox.Show("Not allowed URL");
+                    status.Text = $"Address '{address.Text}' is not allowed";
                 }
             }
         }
@@ -52,6 +43,8 @@ namespace ChildBrowser
             object sender, 
             Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationStartingEventArgs e)
         {
+            status.Text = "Loading...";
+
             var address = e.Uri.ToString();
 
             if (address == "about:blank") return;
@@ -60,8 +53,8 @@ namespace ChildBrowser
 
             if(uri == null)
             {
-                MessageBox.Show("Not allowed URL");
                 e.Cancel = true;
+                status.Text = $"Address '{address}' is not allowed";
             }
         }
 
@@ -70,6 +63,11 @@ namespace ChildBrowser
             if(e.IsSuccess)
             {
                 address.Text = e.Uri.ToString();
+                status.Text = "Page is loaded";
+            }
+            else
+            {
+                status.Text = "Page is failed to load";
             }
         }
     }

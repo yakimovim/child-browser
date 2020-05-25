@@ -4,18 +4,30 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wv="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
-        xmlns:local="clr-namespace:ChildBrowser"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="address" Grid.Row="0" KeyUp="OnAddressKeyUp" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding BackCommand}">Back</Button>
+            <Button Grid.Column="1" Command="{Binding ForwardCommand}">Forward</Button>
+            <Button Grid.Column="2" Command="{Binding RefreshCommand}">Refresh</Button>
+            <TextBox x:Name="address" Grid.Column="3" KeyUp="OnAddressKeyUp" />
+        </Grid>
         <wv:WebView x:Name="browser" Grid.Row="1" 
                     NavigationStarting="OnNavigationStarting"
                     NavigationCompleted="OnNavigationCompleted">
         </wv:WebView>
+        <TextBox Grid.Row="2" x:Name="status" />
     </Grid>
 </Window>
