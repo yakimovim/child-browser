@@ -9,10 +9,43 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="Exit" Command="{Binding ExitCommand}" />
+            </MenuItem>
+            <MenuItem Header="Bookmarks">
+                <MenuItem Header="Add bookmark" Command="{Binding AddBookmarkCommand}" />
+                <Separator />
+                <MenuItem Header="Bookmarks..." ItemsSource="{Binding Bookmarks}" >
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate>
+                            <MenuItem 
+                                Header="{Binding Title}"
+                                Command="{Binding DataContext.GoToBookmarkCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                                CommandParameter="{Binding Address}">
+                                <MenuItem.ContextMenu>
+                                    <ContextMenu DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type MenuItem}}}">
+                                        <MenuItem 
+                                            DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}"
+                                            Header="Edit" 
+                                            Command="{Binding EditBookmarkCommand}" />
+                                        <MenuItem 
+                                            DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}"
+                                            Header="Delete"
+                                            Command="{Binding DeleteBookmarkCommand}" />
+                                    </ContextMenu>
+                                </MenuItem.ContextMenu>
+                            </MenuItem>
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
@@ -24,10 +57,10 @@
             <Button Grid.Column="2" Command="{Binding RefreshCommand}">Refresh</Button>
             <TextBox x:Name="address" Grid.Column="3" KeyUp="OnAddressKeyUp" />
         </Grid>
-        <wv:WebView x:Name="browser" Grid.Row="1" 
+        <wv:WebView x:Name="browser" Grid.Row="2" 
                     NavigationStarting="OnNavigationStarting"
                     NavigationCompleted="OnNavigationCompleted">
         </wv:WebView>
-        <TextBox Grid.Row="2" x:Name="status" />
+        <TextBox Grid.Row="3" Text="{Binding Status}" />
     </Grid>
 </Window>

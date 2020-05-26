@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,6 +10,7 @@ namespace ChildBrowser
     public partial class MainWindow : Window
     {
         private readonly BrowserUrl _browserUrl;
+        private readonly MainWindowViewModel _viewModel;
 
         public MainWindow(BrowserUrl browserUrl)
         {
@@ -18,7 +18,9 @@ namespace ChildBrowser
 
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel(browser);
+            _viewModel = new MainWindowViewModel(browser, browserUrl);
+
+            DataContext = _viewModel;
         }
 
         private void OnAddressKeyUp(object sender, KeyEventArgs e)
@@ -33,7 +35,7 @@ namespace ChildBrowser
                 }
                 else
                 {
-                    status.Text = $"Address '{address.Text}' is not allowed";
+                    _viewModel.Status = $"Address '{address.Text}' is not allowed";
                 }
             }
         }
@@ -42,7 +44,7 @@ namespace ChildBrowser
             object sender, 
             Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationStartingEventArgs e)
         {
-            status.Text = "Loading...";
+            _viewModel.Status = "Loading...";
 
             var address = e.Uri.ToString();
 
@@ -53,7 +55,7 @@ namespace ChildBrowser
             if(uri == null)
             {
                 e.Cancel = true;
-                status.Text = $"Address '{address}' is not allowed";
+                _viewModel.Status = $"Address '{address}' is not allowed";
             }
 
             CommandManager.InvalidateRequerySuggested();
@@ -64,11 +66,11 @@ namespace ChildBrowser
             if(e.IsSuccess)
             {
                 address.Text = e.Uri.ToString();
-                status.Text = "Page is loaded";
+                _viewModel.Status = "Page is loaded";
             }
             else
             {
-                status.Text = "Page is failed to load";
+                _viewModel.Status = "Page is failed to load";
             }
 
             CommandManager.InvalidateRequerySuggested();

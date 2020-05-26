@@ -1,0 +1,35 @@
+﻿<Window x:Class="ChildBrowser.EditBookmark"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChildBrowser"
+        mc:Ignorable="d"
+        SizeToContent="Height"
+        Title="EditBookmark" MinWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Title" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Address" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Address}" />
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button 
+                IsCancel="True" 
+                Command="{Binding CancelCommand}" 
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">Cancel</Button>
+            <Button 
+                IsDefault="True" 
+                Command="{Binding OkCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">Ok</Button>
+        </StackPanel>
+    </Grid>
+</Window>

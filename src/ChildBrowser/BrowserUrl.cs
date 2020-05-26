@@ -23,7 +23,7 @@ namespace ChildBrowser
 
             foreach (var allowedAddress in allowedAddresses)
             {
-                var uri = ConvertToUri(allowedAddress?.ToLower(), false);
+                var uri = ConvertToUri(allowedAddress, false);
 
                 if(uri == null)
                     throw new ArgumentException($"Invalid URL '{allowedAddress}'");
@@ -38,7 +38,7 @@ namespace ChildBrowser
         {
             if (string.IsNullOrWhiteSpace(url)) return null;
 
-            var uri = ConvertToUri(url.ToLower(), true);
+            var uri = ConvertToUri(url, true);
 
             if (uri == null) return null;
 
@@ -77,16 +77,18 @@ namespace ChildBrowser
 
         private bool? SchemeMatch(string allowedScheme, string scheme)
         {
-            if (scheme != Uri.UriSchemeHttp && scheme != Uri.UriSchemeHttps) return false;
-            if (allowedScheme == Uri.UriSchemeHttps && scheme != Uri.UriSchemeHttps) return false;
+            if (!Uri.UriSchemeHttp.Equals(scheme, StringComparison.OrdinalIgnoreCase) 
+                && !Uri.UriSchemeHttps.Equals(scheme, StringComparison.OrdinalIgnoreCase)) return false;
+            if (Uri.UriSchemeHttps.Equals(allowedScheme, StringComparison.OrdinalIgnoreCase) 
+                && !Uri.UriSchemeHttps.Equals(scheme, StringComparison.OrdinalIgnoreCase)) return false;
             return null;
         }
 
         private bool? HostMatch(string allowedHost, string host)
         {
-            if (allowedHost == host) return null;
-            if (allowedHost == $"www.{host}") return null;
-            if ($"www.{allowedHost}" == host) return null;
+            if (string.Equals(allowedHost, host, StringComparison.OrdinalIgnoreCase)) return null;
+            if (string.Equals(allowedHost, $"www.{host}", StringComparison.OrdinalIgnoreCase)) return null;
+            if (string.Equals($"www.{allowedHost}", host, StringComparison.OrdinalIgnoreCase)) return null;
             return false;
         }
 
@@ -96,7 +98,7 @@ namespace ChildBrowser
 
             for (int i = 0; i < allowedSegments.Length; i++)
             {
-                if (allowedSegments[i].TrimEnd('/') != segments[i].TrimEnd('/')) return false;
+                if (!string.Equals(allowedSegments[i].TrimEnd('/'), segments[i].TrimEnd('/'), StringComparison.OrdinalIgnoreCase)) return false;
             }
 
             return null;
