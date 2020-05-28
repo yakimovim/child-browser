@@ -6,24 +6,25 @@ namespace ChildBrowser.Bookmarks
 {
     class BookmarkViewModel : ViewModel
     {
-        private readonly BookmarksViewModel _bookmarksViewModel;
-
-        public BookmarkViewModel(BookmarksViewModel bookmarksViewModel, Bookmark bookmark = null)
+        public BookmarkViewModel(Bookmark bookmark = null)
         {
-            _bookmarksViewModel = bookmarksViewModel ?? throw new ArgumentNullException(nameof(bookmarksViewModel));
             Bookmark = bookmark ?? new Bookmark();
 
             OkCommand = new RelayCommand(arg => ((Window)arg).DialogResult = true);
             CancelCommand = new RelayCommand(arg => ((Window)arg).DialogResult = false);
 
             DeleteBookmarkCommand = new RelayCommand(arg => {
-                _bookmarksViewModel.DeleteBookmarkCommand.Execute(this);
+                Deleting(this, this);
             });
 
             EditBookmarkCommand = new RelayCommand(arg => {
-                _bookmarksViewModel.EditBookmarkCommand.Execute(this);
+                Editing(this, this);
             });
         }
+ 
+        public event EventHandler<BookmarkViewModel> Deleting;
+
+        public event EventHandler<BookmarkViewModel> Editing;
 
         public string Title
         {
@@ -63,7 +64,7 @@ namespace ChildBrowser.Bookmarks
 
         public BookmarkViewModel Clone()
         {
-            return new BookmarkViewModel(_bookmarksViewModel)
+            return new BookmarkViewModel()
             {
                 Title = Title,
                 Address = Address

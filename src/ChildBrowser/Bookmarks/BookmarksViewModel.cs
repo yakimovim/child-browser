@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,50 +15,55 @@ namespace ChildBrowser.Bookmarks
 
             foreach (var bookmark in _storage.Bookmarks)
             {
-                Bookmarks.Add(new BookmarkViewModel(this, bookmark));
+                var viewModel = new BookmarkViewModel(bookmark);
+
+                viewModel.Deleting += OnBookmarkDeleting;
+                viewModel.Editing += OnBookmarkEditing;
+
+                Bookmarks.Add(viewModel);
             }
 
             AddBookmarkCommand = new RelayCommand(arg => {
                 var bookmarkViewModel = (BookmarkViewModel)arg;
 
+                bookmarkViewModel.Deleting += OnBookmarkDeleting;
+                bookmarkViewModel.Editing += OnBookmarkEditing;
+
                 _storage.Add(bookmarkViewModel.Bookmark);
 
                 Bookmarks.Add(bookmarkViewModel);
             });
+        }
 
-            DeleteBookmarkCommand = new RelayCommand(arg => {
-                var bookmarkViewModel = (BookmarkViewModel)arg;
+        private void OnBookmarkEditing(object sender, BookmarkViewModel bookmarkViewModel)
+        {
+            var editable = bookmarkViewModel.Clone();
 
-                if(MessageBox.Show("Do you really want to delete this bookmark?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    _storage.Remove(bookmarkViewModel.Bookmark);
+            var dialog = new EditBookmark(editable);
 
-                    Bookmarks.Remove(bookmarkViewModel);
-                }
-            });
+            if (dialog.ShowDialog() == true)
+            {
+                bookmarkViewModel.FillFrom(editable);
 
-            EditBookmarkCommand = new RelayCommand(arg => {
-                var bookmarkViewModel = (BookmarkViewModel)arg;
+                _storage.Save();
+            }
+        }
 
-                var editable = bookmarkViewModel.Clone();
+        private void OnBookmarkDeleting(object sender, BookmarkViewModel bookmarkViewModel)
+        {
+            if (MessageBox.Show("Do you really want to delete this bookmark?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                _storage.Remove(bookmarkViewModel.Bookmark);
 
-                var dialog = new EditBookmark(editable);
+                Bookmarks.Remove(bookmarkViewModel);
 
-                if (dialog.ShowDialog() == true)
-                {
-                    bookmarkViewModel.FillFrom(editable);
-
-                    _storage.Save();
-                }
-            });
+                bookmarkViewModel.Deleting -= OnBookmarkDeleting;
+                bookmarkViewModel.Editing -= OnBookmarkEditing;
+            }
         }
 
         public ObservableCollection<BookmarkViewModel> Bookmarks { get; } = new ObservableCollection<BookmarkViewModel>();
 
         public ICommand AddBookmarkCommand { get; }
-
-        public ICommand EditBookmarkCommand { get; }
-
-        public ICommand DeleteBookmarkCommand { get; }
     }
 }

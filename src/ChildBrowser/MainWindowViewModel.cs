@@ -1,7 +1,6 @@
 ﻿using ChildBrowser.Bookmarks;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -27,7 +26,7 @@ namespace ChildBrowser
             AddBookmarkCommand = new RelayCommand(
                 (arg) =>
                 {
-                    var viewModel = new BookmarkViewModel(_bookmarksViewModel)
+                    var viewModel = new BookmarkViewModel()
                     {
                         Title = SelectedBrowser.Browser.DocumentTitle,
                         Address = SelectedBrowser.Browser.Source.ToString()
