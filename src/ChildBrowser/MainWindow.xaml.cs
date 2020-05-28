@@ -18,7 +18,7 @@ namespace ChildBrowser
 
             InitializeComponent();
 
-            _viewModel = new MainWindowViewModel(browser, browserUrl);
+            _viewModel = new MainWindowViewModel(browserUrl);
 
             DataContext = _viewModel;
         }
@@ -31,49 +31,13 @@ namespace ChildBrowser
 
                 if(uri != null)
                 {
-                    browser.Navigate(uri);
+                    _viewModel.SelectedBrowser.Browser.Navigate(uri);
                 }
                 else
                 {
-                    _viewModel.Status = $"Address '{address.Text}' is not allowed";
+                    _viewModel.SelectedBrowser.Status = $"Address '{address.Text}' is not allowed";
                 }
             }
-        }
-
-        private void OnNavigationStarting(
-            object sender, 
-            Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationStartingEventArgs e)
-        {
-            _viewModel.Status = "Loading...";
-
-            var address = e.Uri.ToString();
-
-            if (address == "about:blank") return;
-
-            var uri = _browserUrl.GetUri(address);
-
-            if(uri == null)
-            {
-                e.Cancel = true;
-                _viewModel.Status = $"Address '{address}' is not allowed";
-            }
-
-            CommandManager.InvalidateRequerySuggested();
-        }
-
-        private void OnNavigationCompleted(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationCompletedEventArgs e)
-        {
-            if(e.IsSuccess)
-            {
-                address.Text = e.Uri.ToString();
-                _viewModel.Status = "Page is loaded";
-            }
-            else
-            {
-                _viewModel.Status = "Page is failed to load";
-            }
-
-            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
