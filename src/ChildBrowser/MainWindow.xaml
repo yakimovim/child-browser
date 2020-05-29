@@ -56,7 +56,10 @@
             <Button Grid.Column="0" Command="{Binding SelectedBrowser.BackCommand}">Back</Button>
             <Button Grid.Column="1" Command="{Binding SelectedBrowser.ForwardCommand}">Forward</Button>
             <Button Grid.Column="2" Command="{Binding SelectedBrowser.RefreshCommand}">Refresh</Button>
-            <TextBox x:Name="address" Grid.Column="3" Text="{Binding SelectedBrowser.Address}" KeyUp="OnAddressKeyUp" />
+            <TextBox x:Name="address" Grid.Column="3" 
+                     Text="{Binding SelectedBrowser.Address}" 
+                     TextChanged="OnAddressChanged"
+                     KeyUp="OnAddressKeyUp" />
             <Button Grid.Column="4" Command="{Binding AddNewTabCommand}">New tab</Button>
         </Grid>
         <TabControl x:Name="browserTabs" 

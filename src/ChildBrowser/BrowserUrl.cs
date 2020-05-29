@@ -10,7 +10,7 @@ namespace ChildBrowser
 {
     public class BrowserUrl
     {
-        private readonly IReadOnlyCollection<Uri> _allowedUris;
+        public IReadOnlyCollection<Uri> AllowedUris { get; }
 
         public BrowserUrl(IReadOnlyCollection<string> allowedAddresses)
         {
@@ -31,7 +31,7 @@ namespace ChildBrowser
                 allowedUris.AddLast(uri);
             }
 
-            _allowedUris = allowedUris;
+            AllowedUris = allowedUris;
         }
 
         public Uri GetUri(string url)
@@ -42,7 +42,7 @@ namespace ChildBrowser
 
             if (uri == null) return null;
 
-            foreach (var allowedUri in _allowedUris)
+            foreach (var allowedUri in AllowedUris)
             {
                 if (Match(allowedUri, uri))
                     return uri;
@@ -51,7 +51,7 @@ namespace ChildBrowser
             return null;
         }
 
-        private Uri ConvertToUri(string address, bool useHttps)
+        public static Uri ConvertToUri(string address, bool useHttps)
         {
             var schema = useHttps ? "https" : "http";
 

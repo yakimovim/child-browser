@@ -12,6 +12,8 @@ namespace ChildBrowser
         private readonly BrowserUrl _browserUrl;
         private readonly MainWindowViewModel _viewModel;
 
+        private bool _autoCompleteInProgress;
+
         public MainWindow(BrowserUrl browserUrl)
         {
             _browserUrl = browserUrl ?? throw new ArgumentNullException(nameof(browserUrl));
@@ -37,6 +39,34 @@ namespace ChildBrowser
                 {
                     _viewModel.SelectedBrowser.Status = $"Address '{address.Text}' is not allowed";
                 }
+            }
+        }
+
+        private void OnAddressChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (!address.IsFocused) return;
+            if (_autoCompleteInProgress) return;
+
+            try
+            {
+                _autoCompleteInProgress = true;
+
+                var selectionStart = address.SelectionStart;
+
+                var notSelectedPartOfAddress = address.Text.Substring(0, selectionStart);
+
+                var completion = _viewModel.GetAddressCompletion(notSelectedPartOfAddress);
+                if (string.IsNullOrEmpty(completion)) return;
+
+                var autoCompletedText = notSelectedPartOfAddress + completion;
+
+                address.Text = autoCompletedText;
+                address.SelectionStart = selectionStart;
+                address.SelectionLength = completion.Length;
+            }
+            finally
+            {
+                _autoCompleteInProgress = false;
             }
         }
     }

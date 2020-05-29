@@ -1,5 +1,6 @@
 ﻿using ChildBrowser.Bookmarks;
 using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -10,6 +11,7 @@ namespace ChildBrowser
     {
         private readonly BookmarksViewModel _bookmarksViewModel = new BookmarksViewModel();
         private readonly BrowserUrl _browserUrl;
+        private readonly AddressCompletionProvider _addressCompletionProvider = new AddressCompletionProvider();
         private BrowserViewModel _selectedBrowser;
 
         public MainWindowViewModel(
@@ -22,6 +24,9 @@ namespace ChildBrowser
             );
 
             Bookmarks = _bookmarksViewModel.Bookmarks;
+
+            _addressCompletionProvider.RegisterProvider(new BookmarksUriProvider(() => _bookmarksViewModel.Bookmarks.Select(b => b.Bookmark)));
+            _addressCompletionProvider.RegisterProvider(new AllowedUrisProvider(_browserUrl));
 
             AddBookmarkCommand = new RelayCommand(
                 (arg) =>
@@ -55,6 +60,11 @@ namespace ChildBrowser
             _selectedBrowser.Closing += OnBrowserTabClosing;
 
             Browsers.Add(_selectedBrowser);
+        }
+
+        public string GetAddressCompletion(string notSelectedPartOfAddress)
+        {
+            return _addressCompletionProvider.GetAddressCompletion(notSelectedPartOfAddress);
         }
 
         public ObservableCollection<BookmarkViewModel> Bookmarks { get; }
