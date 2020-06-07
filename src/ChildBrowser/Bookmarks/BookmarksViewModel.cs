@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ChildBrowser.Resources;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -51,7 +51,7 @@ namespace ChildBrowser.Bookmarks
 
         private void OnBookmarkDeleting(object sender, BookmarkViewModel bookmarkViewModel)
         {
-            if (MessageBox.Show("Do you really want to delete this bookmark?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show(UITexts.DeleteBookmarkConfirmation, UITexts.ConfirmationDialogTitle, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 _storage.Remove(bookmarkViewModel.Bookmark);
 

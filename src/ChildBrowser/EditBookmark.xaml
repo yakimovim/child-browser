@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ChildBrowser"
+        xmlns:res="clr-namespace:ChildBrowser.Resources"
         mc:Ignorable="d"
         SizeToContent="Height"
-        Title="EditBookmark" MinWidth="300">
+        Title="{x:Static res:UITexts.EditBookmarkTitle}" MinWidth="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -17,19 +17,21 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Title" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static res:UITexts.BookmarkTitle}" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Address" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static res:UITexts.BookmarkAddress}" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Address}" />
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button 
                 IsCancel="True" 
                 Command="{Binding CancelCommand}" 
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">Cancel</Button>
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                Content="{x:Static res:UITexts.CancelButton}" />
             <Button 
                 IsDefault="True" 
                 Command="{Binding OkCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">Ok</Button>
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                Content="{x:Static res:UITexts.OkButton}"/>
         </StackPanel>
     </Grid>
 </Window>

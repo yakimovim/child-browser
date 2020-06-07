@@ -29,16 +29,7 @@ namespace ChildBrowser
         {
             if(e.Key == Key.Enter)
             {
-                var uri = _browserUrl.GetUri(address.Text);
-
-                if(uri != null)
-                {
-                    _viewModel.SelectedBrowser.Browser.Navigate(uri);
-                }
-                else
-                {
-                    _viewModel.SelectedBrowser.Status = $"Address '{address.Text}' is not allowed";
-                }
+                _viewModel.SelectedBrowser.GoToAddress(address.Text);
             }
         }
 

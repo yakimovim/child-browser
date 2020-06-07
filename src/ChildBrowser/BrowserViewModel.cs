@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Win32.UI.Controls;
+﻿using ChildBrowser.Resources;
+using Microsoft.Toolkit.Win32.UI.Controls;
 using Microsoft.Toolkit.Wpf.UI.Controls;
 using System;
 using System.Windows.Input;
@@ -9,7 +10,7 @@ namespace ChildBrowser
     {
         private string _status = string.Empty;
         private string _address;
-        private string _title = "<None>";
+        private string _title = UITexts.AbsentPageTitle;
         private readonly BrowserUrl _browserUrl;
 
         public BrowserViewModel(BrowserUrl browserUrl)
@@ -109,7 +110,7 @@ namespace ChildBrowser
             object sender,
             Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationStartingEventArgs e)
         {
-            Status = "Loading...";
+            Status = UITexts.Loading;
 
             var address = e.Uri.ToString();
 
@@ -120,7 +121,7 @@ namespace ChildBrowser
             if (uri == null)
             {
                 e.Cancel = true;
-                Status = $"Address '{address}' is not allowed";
+                Status = string.Format(UITexts.AddressIsNotAllowed, address);
             }
 
             CommandManager.InvalidateRequerySuggested();
@@ -131,21 +132,21 @@ namespace ChildBrowser
             if (e.IsSuccess)
             {
                 Address = e.Uri.ToString();
-                Status = "Page is loaded";
+                Status = UITexts.PageIsLoaded;
                 Title = string.IsNullOrWhiteSpace(Browser.DocumentTitle) 
-                    ? "<None>"
+                    ? UITexts.AbsentPageTitle
                     : Browser.DocumentTitle;
             }
             else
             {
-                Status = "Page is failed to load";
-                Title = "<None>";
+                Status = UITexts.PageFailedToLoad;
+                Title = UITexts.AbsentPageTitle;
             }
 
             CommandManager.InvalidateRequerySuggested();
         }
 
-        private void GoToAddress(string address)
+        public void GoToAddress(string address)
         {
             var uri = _browserUrl.GetUri(address);
 
@@ -155,7 +156,7 @@ namespace ChildBrowser
             }
             else
             {
-                Status = $"Address '{address}' is not allowed";
+                Status = string.Format(UITexts.AddressIsNotAllowed, address);
             }
         }
     }

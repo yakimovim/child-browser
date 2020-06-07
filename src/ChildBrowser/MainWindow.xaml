@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:wv="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
+        xmlns:res="clr-namespace:ChildBrowser.Resources"
         mc:Ignorable="d"
-        Title="Internet browser" Height="450" Width="800">
+        Title="{x:Static res:UITexts.ApplicationTitle}" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -14,13 +14,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
-            <MenuItem Header="File">
-                <MenuItem Header="Exit" Command="{Binding ExitCommand}" />
+            <MenuItem Header="{x:Static res:UITexts.File}">
+                <MenuItem Header="{x:Static res:UITexts.Exit}" Command="{Binding ExitCommand}" />
             </MenuItem>
-            <MenuItem Header="Bookmarks">
-                <MenuItem Header="Add bookmark" Command="{Binding AddBookmarkCommand}" />
+            <MenuItem Header="{x:Static res:UITexts.Bookmarks}">
+                <MenuItem Header="{x:Static res:UITexts.AddBookmark}" Command="{Binding AddBookmarkCommand}" />
                 <Separator />
-                <MenuItem Header="Bookmarks..." ItemsSource="{Binding Bookmarks}" >
+                <MenuItem Header="{x:Static res:UITexts.BookmarksList}" ItemsSource="{Binding Bookmarks}" >
                     <MenuItem.ItemTemplate>
                         <DataTemplate>
                             <MenuItem 
@@ -31,11 +31,11 @@
                                     <ContextMenu DataContext="{Binding DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type MenuItem}}}">
                                         <MenuItem 
                                             DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}"
-                                            Header="Edit" 
+                                            Header="{x:Static res:UITexts.EditBookmark}" 
                                             Command="{Binding EditBookmarkCommand}" />
                                         <MenuItem 
                                             DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}"
-                                            Header="Delete"
+                                            Header="{x:Static res:UITexts.DeleteBookmark}"
                                             Command="{Binding DeleteBookmarkCommand}" />
                                     </ContextMenu>
                                 </MenuItem.ContextMenu>
@@ -53,14 +53,14 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Command="{Binding SelectedBrowser.BackCommand}">Back</Button>
-            <Button Grid.Column="1" Command="{Binding SelectedBrowser.ForwardCommand}">Forward</Button>
-            <Button Grid.Column="2" Command="{Binding SelectedBrowser.RefreshCommand}">Refresh</Button>
+            <Button Grid.Column="0" Command="{Binding SelectedBrowser.BackCommand}" Content="{x:Static res:UITexts.BrowserBack}" />
+            <Button Grid.Column="1" Command="{Binding SelectedBrowser.ForwardCommand}" Content="{x:Static res:UITexts.BrowserForward}" />
+            <Button Grid.Column="2" Command="{Binding SelectedBrowser.RefreshCommand}" Content="{x:Static res:UITexts.BrowserReload}" />
             <TextBox x:Name="address" Grid.Column="3" 
                      Text="{Binding SelectedBrowser.Address}" 
                      TextChanged="OnAddressChanged"
                      KeyUp="OnAddressKeyUp" />
-            <Button Grid.Column="4" Command="{Binding AddNewTabCommand}">New tab</Button>
+            <Button Grid.Column="4" Command="{Binding AddNewTabCommand}" Content="{x:Static res:UITexts.BrowserNewTab}" />
         </Grid>
         <TabControl x:Name="browserTabs" 
                     Grid.Row="2" 
