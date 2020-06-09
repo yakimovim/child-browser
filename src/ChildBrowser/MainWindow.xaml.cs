@@ -9,14 +9,16 @@ namespace ChildBrowser
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly BrowserUrl _browserUrl;
         private readonly MainWindowViewModel _viewModel;
 
         private bool _autoCompleteInProgress;
 
         public MainWindow(BrowserUrl browserUrl)
         {
-            _browserUrl = browserUrl ?? throw new ArgumentNullException(nameof(browserUrl));
+            if (browserUrl is null)
+            {
+                throw new ArgumentNullException(nameof(browserUrl));
+            }
 
             InitializeComponent();
 

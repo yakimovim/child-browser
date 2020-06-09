@@ -11,8 +11,7 @@ namespace ChildBrowser
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru-RU");
+            Configuration.SetCurrentCulture();
 
             base.OnStartup(e);
 

@@ -15,6 +15,12 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="{x:Static res:UITexts.File}">
+                <MenuItem Header="{x:Static res:UITexts.Languages}">
+                    <MenuItem Header="{x:Static res:UITexts.DefaultLanguage}" Command="{Binding SetLanguageCommand}" />
+                    <MenuItem Header="Русский" Command="{Binding SetLanguageCommand}" CommandParameter="ru-RU" />
+                    <MenuItem Header="English" Command="{Binding SetLanguageCommand}" CommandParameter="en-US" />
+                </MenuItem>
+                <Separator />
                 <MenuItem Header="{x:Static res:UITexts.Exit}" Command="{Binding ExitCommand}" />
             </MenuItem>
             <MenuItem Header="{x:Static res:UITexts.Bookmarks}">

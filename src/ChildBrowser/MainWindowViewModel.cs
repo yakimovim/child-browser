@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Globalization;
 
 namespace ChildBrowser
 {
@@ -56,6 +57,22 @@ namespace ChildBrowser
                 SelectedBrowser = viewModel;
             });
 
+            SetLanguageCommand = new RelayCommand(arg => {
+                var language = (string)arg;
+
+                if(string.IsNullOrWhiteSpace(language)
+                || CultureInfo.GetCultureInfo(language) == null)
+                {
+                    Configuration.Language = null;
+                }
+                else
+                {
+                    Configuration.Language = language;
+                }
+
+                Configuration.SetCurrentCulture();
+            });
+
             _selectedBrowser = new BrowserViewModel(_browserUrl);
             _selectedBrowser.Closing += OnBrowserTabClosing;
 
@@ -74,6 +91,8 @@ namespace ChildBrowser
         public ICommand AddNewTabCommand { get; }
 
         public ICommand ExitCommand { get; }
+
+        public ICommand SetLanguageCommand { get; }
 
         public ObservableCollection<BrowserViewModel> Browsers { get; } = new ObservableCollection<BrowserViewModel>();
 
