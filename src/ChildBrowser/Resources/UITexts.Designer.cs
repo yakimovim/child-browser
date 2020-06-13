@@ -70,110 +70,11 @@ namespace ChildBrowser.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add bookmark....
-        /// </summary>
-        public static string AddBookmark {
-            get {
-                return ResourceManager.GetString("AddBookmark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Address &apos;{0}&apos; is not allowed.
         /// </summary>
         public static string AddressIsNotAllowed {
             get {
                 return ResourceManager.GetString("AddressIsNotAllowed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Internet browser.
-        /// </summary>
-        public static string ApplicationTitle {
-            get {
-                return ResourceManager.GetString("ApplicationTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Address.
-        /// </summary>
-        public static string BookmarkAddress {
-            get {
-                return ResourceManager.GetString("BookmarkAddress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bookmarks.
-        /// </summary>
-        public static string Bookmarks {
-            get {
-                return ResourceManager.GetString("Bookmarks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bookmarks....
-        /// </summary>
-        public static string BookmarksList {
-            get {
-                return ResourceManager.GetString("BookmarksList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Title.
-        /// </summary>
-        public static string BookmarkTitle {
-            get {
-                return ResourceManager.GetString("BookmarkTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Back.
-        /// </summary>
-        public static string BrowserBack {
-            get {
-                return ResourceManager.GetString("BrowserBack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Forward.
-        /// </summary>
-        public static string BrowserForward {
-            get {
-                return ResourceManager.GetString("BrowserForward", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New Tab.
-        /// </summary>
-        public static string BrowserNewTab {
-            get {
-                return ResourceManager.GetString("BrowserNewTab", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Reload.
-        /// </summary>
-        public static string BrowserReload {
-            get {
-                return ResourceManager.GetString("BrowserReload", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel.
-        /// </summary>
-        public static string CancelButton {
-            get {
-                return ResourceManager.GetString("CancelButton", resourceCulture);
             }
         }
         
@@ -187,24 +88,6 @@ namespace ChildBrowser.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default.
-        /// </summary>
-        public static string DefaultLanguage {
-            get {
-                return ResourceManager.GetString("DefaultLanguage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        public static string DeleteBookmark {
-            get {
-                return ResourceManager.GetString("DeleteBookmark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Do you really want to delete this bookmark?.
         /// </summary>
         public static string DeleteBookmarkConfirmation {
@@ -214,65 +97,11 @@ namespace ChildBrowser.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
-        /// </summary>
-        public static string EditBookmark {
-            get {
-                return ResourceManager.GetString("EditBookmark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Edit bookmark.
-        /// </summary>
-        public static string EditBookmarkTitle {
-            get {
-                return ResourceManager.GetString("EditBookmarkTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exit.
-        /// </summary>
-        public static string Exit {
-            get {
-                return ResourceManager.GetString("Exit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File.
-        /// </summary>
-        public static string File {
-            get {
-                return ResourceManager.GetString("File", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Languages.
-        /// </summary>
-        public static string Languages {
-            get {
-                return ResourceManager.GetString("Languages", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ok.
-        /// </summary>
-        public static string OkButton {
-            get {
-                return ResourceManager.GetString("OkButton", resourceCulture);
             }
         }
         

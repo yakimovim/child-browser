@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ChildBrowser.Resources" 
+                    xmlns:v="clr-namespace:System;assembly=System.Runtime">
+    <v:String x:Key="ApplicationTitle">Интернет Браузер</v:String>
+    <v:String x:Key="File">Файл</v:String>
+    <v:String x:Key="Languages">Языки</v:String>
+    <v:String x:Key="DefaultLanguage">По умолчанию</v:String>
+    <v:String x:Key="Exit">Выход</v:String>
+    <v:String x:Key="Bookmarks">Закладки</v:String>
+    <v:String x:Key="AddBookmark">Добавить закладку...</v:String>
+    <v:String x:Key="BookmarksList">Закладки...</v:String>
+    <v:String x:Key="EditBookmark">Изменить</v:String>
+    <v:String x:Key="DeleteBookmark">Удалить</v:String>
+    <v:String x:Key="BrowserBack">Назад</v:String>
+    <v:String x:Key="BrowserForward">Вперёд</v:String>
+    <v:String x:Key="BrowserReload">Перегрузить</v:String>
+    <v:String x:Key="BrowserNewTab">Новая вкладка</v:String>
+    <v:String x:Key="EditBookmarkTitle">Редактировать закладку</v:String>
+    <v:String x:Key="BookmarkTitle">Заголовок</v:String>
+    <v:String x:Key="BookmarkAddress">Адрес</v:String>
+    <v:String x:Key="CancelButton">Отмена</v:String>
+    <v:String x:Key="OkButton">Ok</v:String>
+</ResourceDictionary>

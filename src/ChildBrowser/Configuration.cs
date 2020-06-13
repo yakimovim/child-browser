@@ -1,6 +1,9 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Linq;
+using System.Configuration;
 using System.Globalization;
 using System.Threading;
+using System.Windows;
 
 namespace ChildBrowser
 {
@@ -65,6 +68,31 @@ namespace ChildBrowser
             {
                 Thread.CurrentThread.CurrentCulture = cultureInfo;
                 Thread.CurrentThread.CurrentUICulture = cultureInfo;
+            }
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (cultureInfo.Name)
+            {
+                case "ru-RU":
+                    dict.Source = new Uri(string.Format("Resources/UITexts.{0}.xaml", cultureInfo.Name), UriKind.Relative);
+                    break;
+                default:
+                    dict.Source = new Uri("Resources/UITexts.xaml", UriKind.Relative);
+                    break;
+            }
+
+            ResourceDictionary oldDict = (from d in Application.Current.Resources.MergedDictionaries
+                                          where d.Source != null && d.Source.OriginalString.StartsWith("Resources/UITexts.")
+                                          select d).First();
+            if (oldDict != null)
+            {
+                int ind = Application.Current.Resources.MergedDictionaries.IndexOf(oldDict);
+                Application.Current.Resources.MergedDictionaries.Remove(oldDict);
+                Application.Current.Resources.MergedDictionaries.Insert(ind, dict);
+            }
+            else
+            {
+                Application.Current.Resources.MergedDictionaries.Add(dict);
             }
         }
 
