@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ChildBrowser.Bookmarks;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace ChildBrowser.Bookmarks
+namespace ChildBrowser.ViewModels
 {
     class BookmarkViewModel : ViewModel
     {

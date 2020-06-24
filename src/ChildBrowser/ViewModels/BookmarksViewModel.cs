@@ -1,9 +1,11 @@
-﻿using ChildBrowser.Resources;
+﻿using ChildBrowser.Bookmarks;
+using ChildBrowser.Resources;
+using ChildBrowser.Views;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace ChildBrowser.Bookmarks
+namespace ChildBrowser.ViewModels
 {
     class BookmarksViewModel : ViewModel
     {

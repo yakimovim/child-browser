@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace ChildBrowser
+namespace ChildBrowser.ViewModels
 {
     /// <summary>
     /// Represents command from delegate.

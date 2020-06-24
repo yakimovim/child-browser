@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace ChildBrowser
+namespace ChildBrowser.ViewModels
 {
     abstract class ViewModel : INotifyPropertyChanged
     {

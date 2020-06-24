@@ -1,5 +1,5 @@
-﻿using System.IO;
-using System.Threading;
+﻿using ChildBrowser.Views;
+using System.IO;
 using System.Windows;
 
 namespace ChildBrowser

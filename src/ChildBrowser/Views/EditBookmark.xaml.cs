@@ -1,8 +1,8 @@
-﻿using ChildBrowser.Bookmarks;
+﻿using ChildBrowser.ViewModels;
 using System;
 using System.Windows;
 
-namespace ChildBrowser
+namespace ChildBrowser.Views
 {
     /// <summary>
     /// Interaction logic for EditBookmark.xaml

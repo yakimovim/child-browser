@@ -11,12 +11,10 @@ namespace ChildBrowser
     {
         private const string LanguageKey = "Language";
 
-        private static readonly CultureInfo _defaultCulture;
         private static readonly CultureInfo _defaultUiCulture;
 
         static Configuration()
         {
-            _defaultCulture = Thread.CurrentThread.CurrentCulture;
             _defaultUiCulture = Thread.CurrentThread.CurrentUICulture;
         }
 
@@ -40,7 +38,7 @@ namespace ChildBrowser
                 var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 var settings = configFile.AppSettings.Settings;
 
-                value = GetCultureInfo(value) != null ? value : null;
+                value = !_defaultUiCulture.Equals(GetCultureInfo(value)) ? value : null;
 
                 if (settings[LanguageKey] == null)
                 {
@@ -59,17 +57,13 @@ namespace ChildBrowser
         {
             var cultureInfo = GetCultureInfo(Language);
 
-            if(cultureInfo == null)
-            {
-                Thread.CurrentThread.CurrentCulture = _defaultCulture;
-                Thread.CurrentThread.CurrentUICulture = _defaultUiCulture;
-            }
-            else
-            {
-                Thread.CurrentThread.CurrentCulture = cultureInfo;
-                Thread.CurrentThread.CurrentUICulture = cultureInfo;
-            }
+            Thread.CurrentThread.CurrentUICulture = GetCultureInfo(Language);
 
+            SetResourceDictionary(cultureInfo);
+        }
+
+        private static void SetResourceDictionary(CultureInfo cultureInfo)
+        {
             ResourceDictionary dict = new ResourceDictionary();
             switch (cultureInfo.Name)
             {
@@ -98,7 +92,7 @@ namespace ChildBrowser
 
         private static CultureInfo GetCultureInfo(string language)
         {
-            if (string.IsNullOrWhiteSpace(language)) return null;
+            if (string.IsNullOrWhiteSpace(language)) return _defaultUiCulture;
 
             return CultureInfo.GetCultureInfo(language);
         }

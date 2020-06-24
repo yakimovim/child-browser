@@ -4,7 +4,7 @@ using Microsoft.Toolkit.Wpf.UI.Controls;
 using System;
 using System.Windows.Input;
 
-namespace ChildBrowser
+namespace ChildBrowser.ViewModels
 {
     class BrowserViewModel : ViewModel
     {
