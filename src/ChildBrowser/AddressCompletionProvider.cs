@@ -10,7 +10,6 @@ namespace ChildBrowser
         IEnumerable<Uri> GetUris();
     }
 
-
     class AddressCompletionProvider
     {
         private LinkedList<IUrisProvider> _urisProviders = new LinkedList<IUrisProvider>();

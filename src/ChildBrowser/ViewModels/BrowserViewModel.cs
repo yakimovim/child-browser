@@ -21,7 +21,6 @@ namespace ChildBrowser.ViewModels
             Browser.NavigationStarting += OnNavigationStarting;
             Browser.NavigationCompleted += OnNavigationCompleted;
 
-
             BackCommand = new RelayCommand(
                 (arg) => { Browser.GoBack(); },
                 (arg) => Browser.CanGoBack

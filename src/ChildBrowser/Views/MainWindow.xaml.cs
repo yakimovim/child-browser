@@ -1,5 +1,6 @@
 ﻿using ChildBrowser.ViewModels;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -32,6 +33,7 @@ namespace ChildBrowser.Views
         {
             if(e.Key == Key.Enter)
             {
+                browserTabs.Focus();
                 _viewModel.SelectedBrowser.GoToAddress(address.Text);
             }
         }
@@ -44,6 +46,12 @@ namespace ChildBrowser.Views
             try
             {
                 _autoCompleteInProgress = true;
+
+                if(e.Changes.Count > 0)
+                {
+                    var firstChange = e.Changes.First();
+                    if (firstChange.RemovedLength > 0 && firstChange.AddedLength == 0) return;
+                }
 
                 var selectionStart = address.SelectionStart;
 
