@@ -1,5 +1,4 @@
-﻿using ChildBrowser.Bookmarks;
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -71,6 +70,8 @@ namespace ChildBrowser.ViewModels
                     Configuration.Language = language;
                 }
 
+                NotifyPropertyChanged(nameof(Language));
+
                 Configuration.SetCurrentCulture();
             });
 
@@ -86,6 +87,8 @@ namespace ChildBrowser.ViewModels
         }
 
         public ObservableCollection<BookmarkViewModel> Bookmarks { get; }
+
+        public string Language => Configuration.Language;
 
         public ICommand AddBookmarkCommand { get; }
 

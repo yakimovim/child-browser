@@ -11,12 +11,7 @@ namespace ChildBrowser
     {
         private const string LanguageKey = "Language";
 
-        private static readonly CultureInfo _defaultUiCulture;
-
-        static Configuration()
-        {
-            _defaultUiCulture = Thread.CurrentThread.CurrentUICulture;
-        }
+        public static readonly string DefaultLanguage = "en-US";
 
         public static string Language
         {
@@ -26,7 +21,7 @@ namespace ChildBrowser
                 var settings = configFile.AppSettings.Settings;
                 if (settings[LanguageKey] == null)
                 {
-                    return null;
+                    return DefaultLanguage;
                 }
                 else
                 {
@@ -38,7 +33,7 @@ namespace ChildBrowser
                 var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                 var settings = configFile.AppSettings.Settings;
 
-                value = !_defaultUiCulture.Equals(GetCultureInfo(value)) ? value : null;
+                value = GetCultureInfo(value) == null ? DefaultLanguage : value;
 
                 if (settings[LanguageKey] == null)
                 {
@@ -48,6 +43,7 @@ namespace ChildBrowser
                 {
                     settings[LanguageKey].Value = value;
                 }
+
                 configFile.Save(ConfigurationSaveMode.Modified);
                 ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
             }
@@ -57,7 +53,7 @@ namespace ChildBrowser
         {
             var cultureInfo = GetCultureInfo(Language);
 
-            Thread.CurrentThread.CurrentUICulture = GetCultureInfo(Language);
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
             SetResourceDictionary(cultureInfo);
         }
@@ -92,7 +88,7 @@ namespace ChildBrowser
 
         private static CultureInfo GetCultureInfo(string language)
         {
-            if (string.IsNullOrWhiteSpace(language)) return _defaultUiCulture;
+            if (string.IsNullOrWhiteSpace(language)) return CultureInfo.GetCultureInfo(DefaultLanguage);
 
             return CultureInfo.GetCultureInfo(language);
         }

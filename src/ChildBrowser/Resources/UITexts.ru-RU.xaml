@@ -5,7 +5,6 @@
     <v:String x:Key="ApplicationTitle">Интернет Браузер</v:String>
     <v:String x:Key="File">Файл</v:String>
     <v:String x:Key="Languages">Языки</v:String>
-    <v:String x:Key="DefaultLanguage">По умолчанию</v:String>
     <v:String x:Key="Exit">Выход</v:String>
     <v:String x:Key="Bookmarks">Закладки</v:String>
     <v:String x:Key="AddBookmark">Добавить закладку...</v:String>

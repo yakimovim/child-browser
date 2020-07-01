@@ -5,7 +5,6 @@
     <v:String x:Key="ApplicationTitle">Internet Browser</v:String>
     <v:String x:Key="File">File</v:String>
     <v:String x:Key="Languages">Languages</v:String>
-    <v:String x:Key="DefaultLanguage">Default</v:String>
     <v:String x:Key="Exit">Exit</v:String>
     <v:String x:Key="Bookmarks">Bookmarks</v:String>
     <v:String x:Key="AddBookmark">Add bookmark...</v:String>
