@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         SizeToContent="Height"
-        Title="{DynamicResource EditBookmarkTitle}" MinWidth="300">
-    <Grid>
+        Title="{DynamicResource EditBookmarkTitle}"
+        MinWidth="300" 
+        Width="500"
+        FontSize="{DynamicResource FontSize}" Icon="/Resources/browser.png">
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -16,21 +19,23 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource BookmarkTitle}" />
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource BookmarkTitle}" Style="{StaticResource InputTitles}" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource BookmarkAddress}" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource BookmarkAddress}" Style="{StaticResource InputTitles}" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Address}" />
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button 
                 IsCancel="True" 
                 Command="{Binding CancelCommand}" 
                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                Content="{DynamicResource CancelButton}" />
+                Content="{DynamicResource CancelButton}"
+                Style="{StaticResource DialogButton}"/>
             <Button 
                 IsDefault="True" 
                 Command="{Binding OkCommand}"
                 CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                Content="{DynamicResource OkButton}"/>
+                Content="{DynamicResource OkButton}"
+                Style="{StaticResource DialogButton}"/>
         </StackPanel>
     </Grid>
 </Window>

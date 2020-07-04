@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:conv="clr-namespace:ChildBrowser.Views.Converters"
         mc:Ignorable="d"
-        Title="{DynamicResource ApplicationTitle}" Height="450" Width="800">
+        Title="{DynamicResource ApplicationTitle}" 
+        Height="450" Width="800" 
+        FontSize="{StaticResource FontSize}" 
+        Icon="/Resources/browser.png">
     <Window.Resources>
         <conv:LanguageToCkeckedConverter x:Key="languageToCkeckedConverter" />
     </Window.Resources>
@@ -67,14 +70,34 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Command="{Binding SelectedBrowser.BackCommand}" Content="{DynamicResource BrowserBack}" />
-            <Button Grid.Column="1" Command="{Binding SelectedBrowser.ForwardCommand}" Content="{DynamicResource BrowserForward}" />
-            <Button Grid.Column="2" Command="{Binding SelectedBrowser.RefreshCommand}" Content="{DynamicResource BrowserReload}" />
+            <Button Grid.Column="0" 
+                    Command="{Binding SelectedBrowser.BackCommand}" 
+                    Style="{StaticResource ButtonWithImage}"
+                    ToolTip="{DynamicResource BrowserBack}">
+                <Image Source="/Resources/back.png" Style="{StaticResource Image24}" />
+            </Button>
+            <Button Grid.Column="1" 
+                    Command="{Binding SelectedBrowser.ForwardCommand}" 
+                    Style="{StaticResource ButtonWithImage}"
+                    ToolTip="{DynamicResource BrowserForward}">
+                <Image Source="/Resources/next.png" Style="{StaticResource Image24}" />
+            </Button>
+            <Button Grid.Column="2" 
+                    Command="{Binding SelectedBrowser.RefreshCommand}" 
+                    Style="{StaticResource ButtonWithImage}"
+                    ToolTip="{DynamicResource BrowserReload}">
+                <Image Source="/Resources/refresh.png" Style="{StaticResource Image24}" />
+            </Button>
             <TextBox x:Name="address" Grid.Column="3" 
                      Text="{Binding SelectedBrowser.Address}" 
                      TextChanged="OnAddressChanged"
                      KeyUp="OnAddressKeyUp" />
-            <Button Grid.Column="4" Command="{Binding AddNewTabCommand}" Content="{DynamicResource BrowserNewTab}" />
+            <Button Grid.Column="4" 
+                    Command="{Binding AddNewTabCommand}" 
+                    Style="{StaticResource ButtonWithImage}"
+                    ToolTip="{DynamicResource BrowserNewTab}">
+                <Image Source="/Resources/tab.png" Style="{StaticResource Image24}" />
+            </Button>
         </Grid>
         <TabControl x:Name="browserTabs" 
                     Grid.Row="2" 
@@ -88,7 +111,9 @@
                                    ToolTip="{Binding Title}"
                                    MaxWidth="200" 
                                    TextTrimming="CharacterEllipsis" />
-                        <Button Width="16" Height="16" Command="{Binding CloseCommand}">X</Button>
+                        <Button Command="{Binding CloseCommand}">
+                            <Image Source="/Resources/close.png" Style="{StaticResource Image16}" />
+                        </Button>
                     </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>
