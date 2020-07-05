@@ -1,7 +1,9 @@
 ﻿using ChildBrowser.Resources;
 using Microsoft.Toolkit.Win32.UI.Controls;
+using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
 using Microsoft.Toolkit.Wpf.UI.Controls;
 using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ChildBrowser.ViewModels
@@ -20,6 +22,10 @@ namespace ChildBrowser.ViewModels
             Browser = new WebView();
             Browser.NavigationStarting += OnNavigationStarting;
             Browser.NavigationCompleted += OnNavigationCompleted;
+            Browser.NewWindowRequested += (sender, args) =>
+            {
+                NewWindowRequested(this, args);
+            };
 
             BackCommand = new RelayCommand(
                 (arg) => { Browser.GoBack(); },
@@ -45,6 +51,8 @@ namespace ChildBrowser.ViewModels
                 Closing(this, this);
             });
         }
+
+        public event EventHandler<WebViewControlNewWindowRequestedEventArgs> NewWindowRequested;
 
         public event EventHandler<BrowserViewModel> Closing;
 
@@ -107,7 +115,7 @@ namespace ChildBrowser.ViewModels
 
         private void OnNavigationStarting(
             object sender,
-            Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationStartingEventArgs e)
+            WebViewControlNavigationStartingEventArgs e)
         {
             Status = UITexts.Loading;
 

@@ -5,6 +5,9 @@ using System.Windows;
 using System.Windows.Input;
 using System.Globalization;
 using ChildBrowser.Views;
+using Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace ChildBrowser.ViewModels
 {
@@ -51,6 +54,7 @@ namespace ChildBrowser.ViewModels
             {
                 var viewModel = new BrowserViewModel(_browserUrl);
                 viewModel.Closing += OnBrowserTabClosing;
+                viewModel.NewWindowRequested += OnNewWindowRequested;
 
                 Browsers.Add(viewModel);
 
@@ -77,6 +81,7 @@ namespace ChildBrowser.ViewModels
 
             _selectedBrowser = new BrowserViewModel(_browserUrl);
             _selectedBrowser.Closing += OnBrowserTabClosing;
+            _selectedBrowser.NewWindowRequested += OnNewWindowRequested;
 
             Browsers.Add(_selectedBrowser);
         }
@@ -119,6 +124,7 @@ namespace ChildBrowser.ViewModels
             if (Browsers.Count == 1) return;
 
             viewModel.Closing -= OnBrowserTabClosing;
+            viewModel.NewWindowRequested -= OnNewWindowRequested;
 
             var index = Browsers.IndexOf(viewModel);
 
@@ -127,6 +133,29 @@ namespace ChildBrowser.ViewModels
             if(SelectedBrowser == viewModel)
             {
                 SelectedBrowser = Browsers[Math.Min(index, Browsers.Count - 1)];
+            }
+        }
+
+        private void OnNewWindowRequested(object sender, WebViewControlNewWindowRequestedEventArgs args)
+        {
+            var uri = _browserUrl.GetUri(args.Uri.ToString());
+
+            if(uri != null)
+            {
+                var viewModel = new BrowserViewModel(_browserUrl);
+
+                viewModel.Closing += OnBrowserTabClosing;
+                viewModel.NewWindowRequested += OnNewWindowRequested;
+
+                Browsers.Add(viewModel);
+
+                SelectedBrowser = viewModel;
+
+                args.Handled = true;
+
+                Dispatcher.CurrentDispatcher.BeginInvoke(() => {
+                    viewModel.GoToAddress(uri.ToString());
+                });
             }
         }
     }
